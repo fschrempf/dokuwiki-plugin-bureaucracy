@@ -329,11 +329,17 @@ class helper_plugin_bureaucracy_actiontemplate extends helper_plugin_bureaucracy
         global $ID;
         $backupID = $ID;
 
-        $html = "<p>$thanks</p>";
-
         // Build result tree
         $pages = array_keys($this->targetpages);
         usort($pages, array($this, '_sorttargetpages'));
+
+        if ($thanks == '__redirect__') {
+            return '<meta http-equiv="refresh" content="0; URL=?id=' . $pages[0] . '" />';
+        } else if ($thanks == '__redirect_edit__') {
+            return '<meta http-equiv="refresh" content="0; URL=?id=' . $pages[0] . '&do=edit" />';
+        }
+
+        $html = "<p>$thanks</p>";
 
         $data = array();
         $last_folder = array();
